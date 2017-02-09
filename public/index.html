@@ -3,34 +3,97 @@
   <head>
   <LINK REL="stylesheet" TYPE="text/css" HREF="siteWeb.css">
     <title>CSS/HTML Workshop with Drivy</title>
+	<script>
+	$('.form').find('input, textarea').on('keyup blur focus', function (e) {
+  
+  var $this = $(this),
+      label = $this.prev('label');
+
+	  if (e.type === 'keyup') {
+			if ($this.val() === '') {
+          label.removeClass('active highlight');
+        } else {
+          label.addClass('active highlight');
+        }
+    } else if (e.type === 'blur') {
+    	if( $this.val() === '' ) {
+    		label.removeClass('active highlight'); 
+			} else {
+		    label.removeClass('highlight');   
+			}   
+    } else if (e.type === 'focus') {
+      
+      if( $this.val() === '' ) {
+    		label.removeClass('highlight'); 
+			} 
+      else if( $this.val() !== '' ) {
+		    label.addClass('highlight');
+			}
+    }
+
+});
+
+$('.tab a').on('click', function (e) {
+  
+  e.preventDefault();
+  
+  $(this).parent().addClass('active');
+  $(this).parent().siblings().removeClass('active');
+  
+  target = $(this).attr('href');
+
+  $('.tab-content > div').not(target).hide();
+  
+  $(target).fadeIn(600);
+  
+});
+</script>
   </head>
-  <body>
-  <div id="head" class="image"></div>
-    <div id="car">
-      <input class="model" type="text" placeholder="Car model"/>
-      <input class="price-by-day" type="number" placeholder="Price by day"/>
-      <input class="price-by-km" type="number" placeholder="Price by km"/>
-    </div>
-    <div id="rental">
-      <input class="begin" type="date" placeholder="Rental begin date"/>
-      <input class="end" type="date" placeholder="Rental end date"/>
-      <input class="distance" type="number" placeholder="Distance in km"/>
-      <input class="option" type="checkbox" placeholder="Deductible option"/>
-    </div>
-    <button id="compute">Compute</button>
-    <div id="actors"></div>
-    <script id="template" type="x-tmpl-mustache">
-      {{#actors}}
-        <div class="actor">
-          <span>{{who}}</span>
-          <span>{{type}}</span>
-          <span>{{amount}}</span>
+ <body id="flex">
+  <div class="form">
+      
+        <div id="signup">   
+          <h1>Join the drivy experience now!</h1>
+          
+          <form action="/" method="post">
+          
+          <div class="top-row">
+        
+            <div id="car">
+				<input class="model" type="text" placeholder="Car model"/>
+				<input class="price-by-day" type="number" placeholder="Price by day"/>
+				<input class="price-by-km" type="number" placeholder="Price by km"/>
+			</div>
+			<br></br>
+			
+			<div id="rental">
+				<input class="begin" type="date" placeholder="Rental begin date"/>
+				<input class="end" type="date" placeholder="Rental end date"/>
+				<input class="distance" type="number" placeholder="Distance in km"/>
+				<input class="option" type="checkbox" placeholder="Deductible option"/>
+			</div>
+			<br></br>
+			
+			<button id="compute" class="button button-block">Compute</button>
+			
+			<div id="actors"></div>
+			<script id="template" type="x-tmpl-mustache">
+				{{#actors}}
+				<div class="actor">
+				<span>{{who}}</span>
+				<span>{{type}}</span>
+				<span>{{amount}}</span>
+				</div>
+			{{/actors}}
+			</script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.2.1/mustache.min.js"></script>
+			<script src="drivy.js"></script>
+			<script src="index.js"></script>
+          </div>
+          </form>
         </div>
-      {{/actors}}
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.2.1/mustache.min.js"></script>
-    <script src="drivy.js"></script>
-    <script src="index.js"></script>
+      
+</div> <!-- /form -->
 	
   </body>
 </html>
